@@ -4,75 +4,95 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mom’s Sweet Treats</title>
+
   <style>
     :root{
-      --bg:#fff6fb;
-      --card:#ffffff;
-      --text:#2b2b2b;
-      --muted:#6b6b6b;
-      --pink:#ff5fa2;
-      --pink2:#ff93c6;
-      --shadow: 0 14px 30px rgba(0,0,0,.10);
+      --bg:#07060b;
+      --bg2:#0c0715;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
+      --text:#f5f3ff;
+      --muted: rgba(245,243,255,.70);
+      --pink:#ff4fd8;
+      --purple:#7c3aed;
+      --blue:#22d3ee;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
       --radius: 22px;
     }
-    *{box-sizing:border-box}
+
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(900px 500px at 30% 0%, rgba(255,95,162,.12), transparent 55%),
-                  radial-gradient(900px 500px at 80% 20%, rgba(255,147,198,.14), transparent 55%),
-                  var(--bg);
-      color:var(--text);
+      color: var(--text);
+      background:
+        radial-gradient(900px 450px at 20% 0%, rgba(255,79,216,.25), transparent 55%),
+        radial-gradient(900px 450px at 85% 18%, rgba(124,58,237,.22), transparent 55%),
+        radial-gradient(900px 450px at 60% 90%, rgba(34,211,238,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:18px 14px 80px}
+
+    .wrap{ max-width:1100px; margin:0 auto; padding:18px 14px 90px; }
     .top{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      padding:10px 6px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      padding: 10px 6px 14px;
     }
-    .brand{display:flex; align-items:center; gap:12px}
+
+    .brand{ display:flex; align-items:center; gap:12px; }
     .logo{
       width:52px; height:52px; border-radius:18px;
-      background: linear-gradient(135deg, var(--pink), var(--pink2));
-      box-shadow: 0 14px 28px rgba(255,95,162,.18);
+      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,58,237,.95));
+      box-shadow: 0 18px 40px rgba(255,79,216,.18);
       position:relative;
+      border: 1px solid rgba(255,255,255,.14);
+      overflow:hidden;
     }
     .logo:after{
-      content:"🍰";
+      content:"🧁";
       position:absolute; inset:0;
       display:flex; align-items:center; justify-content:center;
       font-size:26px;
-      filter: drop-shadow(0 6px 8px rgba(0,0,0,.12));
+      filter: drop-shadow(0 10px 10px rgba(0,0,0,.35));
     }
-    h1{margin:0; font-size:18px}
-    .sub{margin:2px 0 0; color:var(--muted); font-size:13px}
-    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
+
+    .brand h1{ margin:0; font-size:18px; letter-spacing:.2px; }
+    .sub{ margin:2px 0 0; color:var(--muted); font-size:13px; }
+
+    /* Buttons as LINKS so they always work */
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; }
     .btn{
-      border:0;
-      padding:12px 14px;
-      border-radius: 18px;
-      cursor:pointer;
-      font-weight:700;
-      box-shadow: var(--shadow);
-      font-size:15px;
-      transition: transform .12s ease;
       display:inline-flex;
-      gap:10px;
       align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      font-weight: 800;
+      text-decoration:none;
+      cursor:pointer;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn:hover{transform: translateY(-1px)}
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
     .btn.primary{
-      background: linear-gradient(135deg, var(--pink), var(--pink2));
-      color:#fff;
+      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,58,237,.95));
+      border-color: rgba(255,79,216,.35);
     }
-    .btn.light{
-      background:#fff;
-      color:var(--text);
-      border:1px solid rgba(0,0,0,.08);
+    .btn.blue{
+      background: linear-gradient(135deg, rgba(34,211,238,.92), rgba(124,58,237,.85));
+      border-color: rgba(34,211,238,.30);
     }
 
     .hero{
-      background: rgba(255,255,255,.85);
-      border:1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding:16px;
@@ -81,50 +101,64 @@
       gap:14px;
       align-items:center;
       overflow:hidden;
+      position:relative;
     }
-    @media (max-width: 860px){ .hero{grid-template-columns:1fr} }
-    .heroTitle{font-size:26px; line-height:1.1; margin:0 0 8px}
-    .heroText{margin:0; color:var(--muted); font-size:15px; line-height:1.35}
-    .heroBadges{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
-    .badge{
-      background: rgba(255,95,162,.10);
-      border: 1px solid rgba(255,95,162,.18);
-      color: #8a1f50;
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(800px 300px at 20% 0%, rgba(255,79,216,.25), transparent 50%),
+                  radial-gradient(900px 300px at 90% 30%, rgba(124,58,237,.22), transparent 55%);
+      pointer-events:none;
+      opacity:.7;
+    }
+    .hero > *{ position:relative; }
+
+    @media (max-width: 860px){ .hero{ grid-template-columns: 1fr; } }
+
+    .heroTitle{ font-size:28px; line-height:1.05; margin:0 0 10px; }
+    .heroText{ margin:0; color:var(--muted); font-size:15px; line-height:1.35; }
+
+    .pillRow{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .pill{
       padding:8px 10px;
       border-radius: 999px;
-      font-weight:700;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-weight:800;
       font-size:13px;
+      color: rgba(245,243,255,.88);
     }
-    .heroImg{
+
+    .heroCard{
       border-radius: 18px;
-      min-height: 170px;
-      background:
-        linear-gradient(135deg, rgba(255,95,162,.18), rgba(255,147,198,.20)),
-        url("https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=60");
-      background-size: cover;
-      background-position:center;
-      box-shadow: 0 16px 30px rgba(0,0,0,.10);
-      position:relative;
+      min-height: 180px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(255,79,216,.18), rgba(124,58,237,.18));
+      box-shadow: 0 18px 45px rgba(0,0,0,.45);
       overflow:hidden;
+      display:flex;
+      align-items:end;
+      justify-content:start;
+      padding:14px;
+      position:relative;
     }
-    .heroImg:after{
-      content:"Tap photos below to view bigger 👇";
-      position:absolute;
-      left:12px; bottom:12px;
-      background: rgba(255,255,255,.86);
-      border: 1px solid rgba(0,0,0,.06);
-      color: var(--text);
+    .heroCard .note{
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
       padding:10px 12px;
-      border-radius: 14px;
-      font-weight:700;
+      font-weight:900;
       font-size:13px;
-      box-shadow: 0 12px 22px rgba(0,0,0,.10);
+      color: rgba(245,243,255,.92);
+      backdrop-filter: blur(8px);
     }
 
     .sectionTitle{
       margin:18px 4px 10px;
-      font-size:16px;
-      color: var(--text);
+      font-size:15px;
+      color: rgba(245,243,255,.92);
+      font-weight:900;
+      letter-spacing:.2px;
     }
 
     .grid{
@@ -137,81 +171,84 @@
       grid-column: span 4;
       border-radius: var(--radius);
       overflow:hidden;
-      background: var(--card);
-      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
       box-shadow: var(--shadow);
       cursor:pointer;
-      transition: transform .12s ease;
+      transition: transform .12s ease, border-color .12s ease;
       position:relative;
-      min-height: 210px;
+      min-height: 220px;
     }
-    .tile:hover{transform: translateY(-2px)}
-    .tile img{width:100%; height:100%; object-fit:cover; display:block}
+    .tile:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
+    .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+
     .cap{
       position:absolute;
       left:10px; right:10px; bottom:10px;
-      background: rgba(255,255,255,.88);
-      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.14);
       border-radius: 16px;
       padding:10px 12px;
-      box-shadow: 0 12px 20px rgba(0,0,0,.10);
+      box-shadow: 0 18px 40px rgba(0,0,0,.40);
+      backdrop-filter: blur(10px);
     }
-    .cap .name{font-weight:900; font-size:14px}
-    .cap .tiny{color:var(--muted); font-size:12px; margin-top:2px}
+    .cap .name{ font-weight: 950; font-size:14px; }
+    .cap .tiny{ color: rgba(245,243,255,.72); font-size:12px; margin-top:2px; font-weight:700; }
 
-    @media (max-width: 900px){ .tile{grid-column: span 6} }
-    @media (max-width: 560px){ .tile{grid-column: span 12} }
+    @media (max-width: 900px){ .tile{ grid-column: span 6; } }
+    @media (max-width: 560px){ .tile{ grid-column: span 12; } }
 
     .stickyBar{
       position:fixed;
       left:0; right:0; bottom:0;
-      background: rgba(255,255,255,.92);
-      border-top: 1px solid rgba(0,0,0,.08);
+      background: rgba(0,0,0,.65);
+      border-top: 1px solid rgba(255,255,255,.12);
       padding:10px;
       display:flex;
       justify-content:center;
       gap:10px;
       z-index:10;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
-    .stickyBar .btn{box-shadow: 0 12px 24px rgba(0,0,0,.10)}
 
-    /* Simple photo viewer */
+    /* Modal */
     .modal{
       position:fixed; inset:0;
-      background: rgba(0,0,0,.55);
+      background: rgba(0,0,0,.65);
       display:none;
       align-items:center; justify-content:center;
       padding:16px;
       z-index:50;
     }
-    .modal.show{display:flex}
+    .modal.show{ display:flex; }
     .modalCard{
-      width:min(950px, 100%);
-      background:#fff;
+      width:min(960px, 100%);
+      background: rgba(10,7,18,.95);
       border-radius: 24px;
       overflow:hidden;
-      box-shadow: 0 30px 70px rgba(0,0,0,.35);
-      position:relative;
+      box-shadow: 0 35px 80px rgba(0,0,0,.65);
+      border: 1px solid rgba(255,255,255,.12);
     }
     .modalTop{
       display:flex; justify-content:space-between; align-items:center;
       padding:10px 12px;
-      border-bottom: 1px solid rgba(0,0,0,.08);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
     }
-    .modalTitle{font-weight:900}
+    .modalTitle{ font-weight: 950; }
     .close{
-      border:0;
-      background:#f3f3f3;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
       border-radius: 14px;
       padding:10px 12px;
       cursor:pointer;
-      font-weight:900;
+      font-weight:950;
+      color: var(--text);
     }
     .modalImg{
       width:100%;
       max-height: 72vh;
-      object-fit:cover;
+      object-fit: cover;
       display:block;
     }
     .modalBottom{
@@ -222,9 +259,10 @@
       justify-content:space-between;
       align-items:center;
     }
-    .note{color:var(--muted); font-size:13px}
+    .note{ color: rgba(245,243,255,.70); font-size:13px; font-weight:750; }
   </style>
 </head>
+
 <body>
   <div class="wrap">
 
@@ -233,40 +271,46 @@
         <div class="logo"></div>
         <div>
           <h1 id="brandName">Mom’s Sweet Treats</h1>
-          <div class="sub" id="brandSub">Made with love • Local pickup • Message to order</div>
+          <div class="sub" id="brandSub">Tap photos • Message to order • Local pickup</div>
         </div>
       </div>
+
       <div class="ctaRow">
-        <button class="btn primary" id="btnText">💬 Text to Order</button>
-        <button class="btn light" id="btnFB">📘 Facebook</button>
-        <button class="btn light" id="btnMsg">💙 Messenger</button>
+        <a class="btn primary" id="linkText" href="#" rel="nofollow">💬 Text</a>
+        <a class="btn" id="linkMessenger" href="#" target="_blank" rel="noopener noreferrer nofollow">💙 Messenger</a>
+        <a class="btn blue" id="linkFacebook" href="#" target="_blank" rel="noopener noreferrer nofollow">📘 Facebook</a>
       </div>
     </div>
 
     <div class="hero">
       <div>
-        <h2 class="heroTitle">Cute treats for birthdays, holidays, and “just because”</h2>
+        <h2 class="heroTitle">Pretty treats people actually tap on.</h2>
         <p class="heroText">
-          Tap any photo to see it bigger. If you like something, press the big button to message me.
+          This page is made for grandmas: big photos, big buttons, no scrolling essays.
+          Tap a picture → then hit Messenger/Text to ask about it.
         </p>
-        <div class="heroBadges">
-          <div class="badge">Cake Pops</div>
-          <div class="badge">Cakes</div>
-          <div class="badge">Brownies</div>
-          <div class="badge">Cookies</div>
+
+        <div class="pillRow">
+          <div class="pill">Cake Pops</div>
+          <div class="pill">Cakes</div>
+          <div class="pill">Brownies</div>
+          <div class="pill">Cookies</div>
         </div>
       </div>
-      <div class="heroImg" id="heroImg"></div>
+
+      <div class="heroCard">
+        <div class="note">👇 Tap any photo below to zoom</div>
+      </div>
     </div>
 
     <div class="sectionTitle">Tap a photo ✨</div>
     <div class="grid" id="grid"></div>
-
   </div>
 
   <div class="stickyBar">
-    <button class="btn primary" id="btnText2">💬 Text to Order</button>
-    <button class="btn light" id="btnMsg2">💙 Messenger</button>
+    <a class="btn primary" id="linkText2" href="#" rel="nofollow">💬 Text</a>
+    <a class="btn" id="linkMessenger2" href="#" target="_blank" rel="noopener noreferrer nofollow">💙 Messenger</a>
+    <a class="btn blue" id="linkFacebook2" href="#" target="_blank" rel="noopener noreferrer nofollow">📘 Facebook</a>
   </div>
 
   <div class="modal" id="modal">
@@ -277,10 +321,11 @@
       </div>
       <img class="modalImg" id="modalImg" alt="Treat photo" />
       <div class="modalBottom">
-        <div class="note" id="modalNote">Tap Message to ask about this one.</div>
+        <div class="note" id="modalNote">Tap Messenger/Text to ask about this one.</div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn primary" id="btnMsg3">💙 Messenger</button>
-          <button class="btn light" id="btnFB2">📘 Facebook</button>
+          <a class="btn primary" id="linkText3" href="#" rel="nofollow">💬 Text</a>
+          <a class="btn" id="linkMessenger3" href="#" target="_blank" rel="noopener noreferrer nofollow">💙 Messenger</a>
+          <a class="btn blue" id="linkFacebook3" href="#" target="_blank" rel="noopener noreferrer nofollow">📘 Facebook</a>
         </div>
       </div>
     </div>
