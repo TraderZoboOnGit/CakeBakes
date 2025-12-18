@@ -1,336 +1,620 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mom’s Sweet Treats</title>
-
-  <style>
-    :root{
-      --bg:#07060b;
-      --bg2:#0c0715;
-      --card: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.10);
-      --text:#f5f3ff;
-      --muted: rgba(245,243,255,.70);
-      --pink:#ff4fd8;
-      --purple:#7c3aed;
-      --blue:#22d3ee;
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --radius: 22px;
-    }
-
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      color: var(--text);
-      background:
-        radial-gradient(900px 450px at 20% 0%, rgba(255,79,216,.25), transparent 55%),
-        radial-gradient(900px 450px at 85% 18%, rgba(124,58,237,.22), transparent 55%),
-        radial-gradient(900px 450px at 60% 90%, rgba(34,211,238,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-    }
-
-    .wrap{ max-width:1100px; margin:0 auto; padding:18px 14px 90px; }
-    .top{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-      padding: 10px 6px 14px;
-    }
-
-    .brand{ display:flex; align-items:center; gap:12px; }
-    .logo{
-      width:52px; height:52px; border-radius:18px;
-      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,58,237,.95));
-      box-shadow: 0 18px 40px rgba(255,79,216,.18);
-      position:relative;
-      border: 1px solid rgba(255,255,255,.14);
-      overflow:hidden;
-    }
-    .logo:after{
-      content:"🧁";
-      position:absolute; inset:0;
-      display:flex; align-items:center; justify-content:center;
-      font-size:26px;
-      filter: drop-shadow(0 10px 10px rgba(0,0,0,.35));
-    }
-
-    .brand h1{ margin:0; font-size:18px; letter-spacing:.2px; }
-    .sub{ margin:2px 0 0; color:var(--muted); font-size:13px; }
-
-    /* Buttons as LINKS so they always work */
-    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      font-weight: 800;
-      text-decoration:none;
-      cursor:pointer;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      box-shadow: var(--shadow);
-      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
-    .btn:active{ transform: translateY(0px) scale(.99); }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,58,237,.95));
-      border-color: rgba(255,79,216,.35);
-    }
-    .btn.blue{
-      background: linear-gradient(135deg, rgba(34,211,238,.92), rgba(124,58,237,.85));
-      border-color: rgba(34,211,238,.30);
-    }
-
-    .hero{
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:16px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:14px;
-      align-items:center;
-      overflow:hidden;
-      position:relative;
-    }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(800px 300px at 20% 0%, rgba(255,79,216,.25), transparent 50%),
-                  radial-gradient(900px 300px at 90% 30%, rgba(124,58,237,.22), transparent 55%);
-      pointer-events:none;
-      opacity:.7;
-    }
-    .hero > *{ position:relative; }
-
-    @media (max-width: 860px){ .hero{ grid-template-columns: 1fr; } }
-
-    .heroTitle{ font-size:28px; line-height:1.05; margin:0 0 10px; }
-    .heroText{ margin:0; color:var(--muted); font-size:15px; line-height:1.35; }
-
-    .pillRow{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
-    .pill{
-      padding:8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      font-weight:800;
-      font-size:13px;
-      color: rgba(245,243,255,.88);
-    }
-
-    .heroCard{
-      border-radius: 18px;
-      min-height: 180px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: linear-gradient(135deg, rgba(255,79,216,.18), rgba(124,58,237,.18));
-      box-shadow: 0 18px 45px rgba(0,0,0,.45);
-      overflow:hidden;
-      display:flex;
-      align-items:end;
-      justify-content:start;
-      padding:14px;
-      position:relative;
-    }
-    .heroCard .note{
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 16px;
-      padding:10px 12px;
-      font-weight:900;
-      font-size:13px;
-      color: rgba(245,243,255,.92);
-      backdrop-filter: blur(8px);
-    }
-
-    .sectionTitle{
-      margin:18px 4px 10px;
-      font-size:15px;
-      color: rgba(245,243,255,.92);
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-      margin-top:8px;
-    }
-    .tile{
-      grid-column: span 4;
-      border-radius: var(--radius);
-      overflow:hidden;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease;
-      position:relative;
-      min-height: 220px;
-    }
-    .tile:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
-    .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-    .cap{
-      position:absolute;
-      left:10px; right:10px; bottom:10px;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 16px;
-      padding:10px 12px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.40);
-      backdrop-filter: blur(10px);
-    }
-    .cap .name{ font-weight: 950; font-size:14px; }
-    .cap .tiny{ color: rgba(245,243,255,.72); font-size:12px; margin-top:2px; font-weight:700; }
-
-    @media (max-width: 900px){ .tile{ grid-column: span 6; } }
-    @media (max-width: 560px){ .tile{ grid-column: span 12; } }
-
-    .stickyBar{
-      position:fixed;
-      left:0; right:0; bottom:0;
-      background: rgba(0,0,0,.65);
-      border-top: 1px solid rgba(255,255,255,.12);
-      padding:10px;
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      z-index:10;
-      backdrop-filter: blur(12px);
-    }
-
-    /* Modal */
-    .modal{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.65);
-      display:none;
-      align-items:center; justify-content:center;
-      padding:16px;
-      z-index:50;
-    }
-    .modal.show{ display:flex; }
-    .modalCard{
-      width:min(960px, 100%);
-      background: rgba(10,7,18,.95);
-      border-radius: 24px;
-      overflow:hidden;
-      box-shadow: 0 35px 80px rgba(0,0,0,.65);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .modalTop{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:10px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-    }
-    .modalTitle{ font-weight: 950; }
-    .close{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      border-radius: 14px;
-      padding:10px 12px;
-      cursor:pointer;
-      font-weight:950;
-      color: var(--text);
-    }
-    .modalImg{
-      width:100%;
-      max-height: 72vh;
-      object-fit: cover;
-      display:block;
-    }
-    .modalBottom{
-      padding:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .note{ color: rgba(245,243,255,.70); font-size:13px; font-weight:750; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mom's Sweet Treats</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #fff9f5;
+            color: #333;
+            line-height: 1.5;
+            padding-bottom: 80px; /* Space for fixed button */
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(255, 118, 140, 0.2);
+        }
+        
+        .brand-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .brand-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Image */
+        .hero {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-text {
+            color: white;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        
+        .hero-text h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* Main CTA Buttons */
+        .cta-section {
+            padding: 0 1rem 2rem;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 1.8rem;
+            color: #ff5a8c;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+        }
+        
+        .big-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            border-radius: 16px;
+            padding: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 70px;
+        }
+        
+        .big-button:hover, .big-button:active {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .big-button.primary {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+        }
+        
+        .big-button.facebook {
+            background: linear-gradient(135deg, #1877f2, #0a5dca);
+            color: white;
+        }
+        
+        .big-button.messenger {
+            background: linear-gradient(135deg, #0084ff, #0066cc);
+            color: white;
+        }
+        
+        .button-icon {
+            font-size: 1.8rem;
+            margin-right: 12px;
+        }
+        
+        /* Gallery */
+        .gallery-section {
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #ff5a8c;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tile {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tile:hover {
+            transform: translateY(-4px);
+        }
+        
+        .tile-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .tile-content {
+            padding: 1.2rem;
+        }
+        
+        .tile-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tile-note {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            animation: modalSlide 0.3s ease;
+        }
+        
+        @keyframes modalSlide {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-note {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        
+        .modal-buttons {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .footer-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .footer-button {
+            background: #ff5a8c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .footer-button:hover, .footer-button:active {
+            background: #ff3d7a;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 250px;
+            }
+            
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .brand-name {
+                font-size: 1.8rem;
+            }
+            
+            .big-button {
+                font-size: 1.2rem;
+                min-height: 65px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                height: 200px;
+            }
+            
+            .brand-name {
+                font-size: 1.6rem;
+            }
+            
+            .brand-subtitle {
+                font-size: 1rem;
+            }
+            
+            .big-button {
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            
+            .footer-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="wrap">
-
-    <div class="top">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1 id="brandName">Mom’s Sweet Treats</h1>
-          <div class="sub" id="brandSub">Tap photos • Message to order • Local pickup</div>
-        </div>
-      </div>
-
-      <div class="ctaRow">
-        <a class="btn primary" id="linkText" href="#" rel="nofollow">💬 Text</a>
-        <a class="btn" id="linkMessenger" href="#" target="_blank" rel="noopener noreferrer nofollow">💙 Messenger</a>
-        <a class="btn blue" id="linkFacebook" href="#" target="_blank" rel="noopener noreferrer nofollow">📘 Facebook</a>
-      </div>
+    <!-- Header -->
+    <div class="header">
+        <div class="brand-name" id="brandName">Mom's Sweet Treats</div>
+        <div class="brand-subtitle" id="brandSub">Made with love • Local pickup • Message to order</div>
     </div>
-
+    
+    <!-- Hero Image -->
     <div class="hero">
-      <div>
-        <h2 class="heroTitle">Pretty treats people actually tap on.</h2>
-        <p class="heroText">
-          This page is made for grandmas: big photos, big buttons, no scrolling essays.
-          Tap a picture → then hit Messenger/Text to ask about it.
-        </p>
-
-        <div class="pillRow">
-          <div class="pill">Cake Pops</div>
-          <div class="pill">Cakes</div>
-          <div class="pill">Brownies</div>
-          <div class="pill">Cookies</div>
+        <div class="hero-text">
+            <h1>Sweet Treats Made Fresh</h1>
+            <p>Tap a photo below to see details</p>
         </div>
-      </div>
-
-      <div class="heroCard">
-        <div class="note">👇 Tap any photo below to zoom</div>
-      </div>
+    </div>
+    
+    <!-- Main CTA Buttons -->
+    <div class="cta-section">
+        <h2 class="cta-title">How to Order</h2>
+        <div class="button-grid">
+            <button class="big-button primary" id="btnText">
+                <span class="button-icon">📱</span> Text Message
+            </button>
+            <button class="big-button facebook" id="btnFB">
+                <span class="button-icon">👍</span> Facebook Page
+            </button>
+            <button class="big-button messenger" id="btnMsg">
+                <span class="button-icon">💬</span> Messenger
+            </button>
+        </div>
+    </div>
+    
+    <!-- Gallery -->
+    <div class="gallery-section">
+        <h2 class="section-title">What's Available</h2>
+        <div class="grid" id="grid">
+            <!-- Items will be inserted here -->
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <button class="close-modal" id="closeModal">×</button>
+        <div class="modal-content">
+            <img class="modal-img" id="modalImg" src="" alt="">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-note" id="modalNote"></p>
+                <div class="modal-buttons">
+                    <button class="big-button primary" id="btnText2">
+                        <span class="button-icon">📱</span> Text About This
+                    </button>
+                    <button class="big-button messenger" id="btnMsg2">
+                        <span class="button-icon">💬</span> Ask on Messenger
+                    </button>
+                    <button class="big-button facebook" id="btnFB2">
+                        <span class="button-icon">👍</span> See Facebook Page
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fixed Footer Buttons -->
+    <div class="footer">
+        <div class="footer-buttons">
+            <button class="footer-button" id="btnText3">📱 Text to Order</button>
+            <button class="footer-button" id="btnMsg3">💬 Messenger</button>
+        </div>
     </div>
 
-    <div class="sectionTitle">Tap a photo ✨</div>
-    <div class="grid" id="grid"></div>
-  </div>
+<script>
+// ✅ SET THESE LINKS (Replace with your actual links)
+const LINKS = {
+    phoneNumber: "15555551234",
+    facebookPageUrl: "https://www.facebook.com/yourpage",
+    messengerUrl: "https://m.me/yourpage"
+};
 
-  <div class="stickyBar">
-    <a class="btn primary" id="linkText2" href="#" rel="nofollow">💬 Text</a>
-    <a class="btn" id="linkMessenger2" href="#" target="_blank" rel="noopener noreferrer nofollow">💙 Messenger</a>
-    <a class="btn blue" id="linkFacebook2" href="#" target="_blank" rel="noopener noreferrer nofollow">📘 Facebook</a>
-  </div>
+// ✅ Change brand text here if you want
+const BRAND = {
+    name: "Mom's Sweet Treats",
+    subtitle: "Made with love • Local pickup • Message to order"
+};
 
-  <div class="modal" id="modal">
-    <div class="modalCard">
-      <div class="modalTop">
-        <div class="modalTitle" id="modalTitle">Treat</div>
-        <button class="close" id="closeModal">Close</button>
-      </div>
-      <img class="modalImg" id="modalImg" alt="Treat photo" />
-      <div class="modalBottom">
-        <div class="note" id="modalNote">Tap Messenger/Text to ask about this one.</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" id="linkText3" href="#" rel="nofollow">💬 Text</a>
-          <a class="btn" id="linkMessenger3" href="#" target="_blank" rel="noopener noreferrer nofollow">💙 Messenger</a>
-          <a class="btn blue" id="linkFacebook3" href="#" target="_blank" rel="noopener noreferrer nofollow">📘 Facebook</a>
-        </div>
-      </div>
-    </div>
-  </div>
+// ✅ Gallery items with proper Unsplash images
+const GALLERY = [
+    {
+        title: "Chocolate Cake",
+        note: "Rich chocolate layers with buttercream frosting",
+        img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Rainbow Cupcakes",
+        note: "Colorful vanilla cupcakes with sprinkles",
+        img: "https://images.unsplash.com/photo-1557925923-33b27f3e5c35?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Cookies",
+        note: "Soft & chewy chocolate chip cookies",
+        img: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Brownies",
+        note: "Fudgy brownies with walnuts",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Strawberry Cake",
+        note: "Fresh strawberries with whipped cream",
+        img: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Donuts",
+        note: "Assorted glazed and sprinkled donuts",
+        img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Birthday Cake",
+        note: "Custom colors • Any theme available",
+        img: "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        title: "Macarons",
+        note: "Assorted flavors in gift box",
+        img: "https://images.unsplash.com/photo-1569929238190-869826b1bb05?auto=format&fit=crop&w=1200&q=80"
+    }
+];
 
-  <script type="module" src="./app.js"></script>
+// DOM Elements
+const grid = document.getElementById("grid");
+const brandName = document.getElementById("brandName");
+const brandSub = document.getElementById("brandSub");
+
+const modal = document.getElementById("modal");
+const closeModal = document.getElementById("closeModal");
+const modalImg = document.getElementById("modalImg");
+const modalTitle = document.getElementById("modalTitle");
+const modalNote = document.getElementById("modalNote");
+
+// Button references
+const btnText = document.getElementById("btnText");
+const btnFB = document.getElementById("btnFB");
+const btnMsg = document.getElementById("btnMsg");
+const btnText2 = document.getElementById("btnText2");
+const btnMsg2 = document.getElementById("btnMsg2");
+const btnFB2 = document.getElementById("btnFB2");
+const btnText3 = document.getElementById("btnText3");
+const btnMsg3 = document.getElementById("btnMsg3");
+
+// Set brand
+brandName.textContent = BRAND.name;
+brandSub.textContent = BRAND.subtitle;
+
+// Helper functions
+function openUrl(url) {
+    window.open(url, "_blank");
+}
+
+function openText(itemTitle = "a treat") {
+    const num = LINKS.phoneNumber.replace(/\D/g, "");
+    if (!num) {
+        alert("Please set a phone number in the code first.");
+        return;
+    }
+    const body = encodeURIComponent(`Hi! I saw "${itemTitle}" on your site. Is it available?`);
+    window.location.href = `sms:${num}?&body=${body}`;
+}
+
+// Wire up all buttons
+function wireButtons(currentTitle = "a treat") {
+    // Main CTA buttons
+    btnText.onclick = () => openText(currentTitle);
+    btnFB.onclick = () => openUrl(LINKS.facebookPageUrl);
+    btnMsg.onclick = () => openUrl(LINKS.messengerUrl);
+    
+    // Modal buttons
+    btnText2.onclick = () => openText(currentTitle);
+    btnMsg2.onclick = () => openUrl(LINKS.messengerUrl);
+    btnFB2.onclick = () => openUrl(LINKS.facebookPageUrl);
+    
+    // Footer buttons
+    btnText3.onclick = () => openText(currentTitle);
+    btnMsg3.onclick = () => openUrl(LINKS.messengerUrl);
+}
+
+// Initialize buttons
+wireButtons("a treat");
+
+// Render gallery
+function renderGallery() {
+    grid.innerHTML = "";
+    GALLERY.forEach(item => {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.innerHTML = `
+            <img class="tile-img" src="${item.img}" alt="${item.title}">
+            <div class="tile-content">
+                <h3 class="tile-title">${escapeHtml(item.title)}</h3>
+                <p class="tile-note">${escapeHtml(item.note)}</p>
+            </div>
+        `;
+        tile.onclick = () => openModal(item);
+        grid.appendChild(tile);
+    });
+}
+
+// Open modal with item details
+function openModal(item) {
+    modalTitle.textContent = item.title;
+    modalNote.textContent = item.note;
+    modalImg.src = item.img;
+    modal.classList.add("show");
+    
+    // Update buttons for this specific item
+    wireButtons(item.title);
+}
+
+// Close modal
+closeModal.onclick = () => modal.classList.remove("show");
+modal.onclick = (e) => {
+    if (e.target === modal) {
+        modal.classList.remove("show");
+    }
+};
+
+// Escape HTML for safety
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Initialize the page
+renderGallery();
+
+// Add some interactive effects
+document.addEventListener('DOMContentLoaded', () => {
+    // Add click animation to all buttons
+    const allButtons = document.querySelectorAll('button');
+    allButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        });
+    });
+    
+    console.log("Sweet Treats website loaded successfully! 🍰");
+});
+</script>
 </body>
 </html>
