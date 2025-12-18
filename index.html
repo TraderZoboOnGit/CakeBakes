@@ -2,167 +2,181 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bakery Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mom’s Sweet Treats</title>
   <style>
     :root{
-      --bg:#0f0f13;
-      --card:#161621;
-      --muted:#9aa0aa;
-      --text:#f3f5f7;
-      --accent:#ff7eb6;
-      --accent2:#7afcff;
-      --ring: rgba(255,126,182,.25);
-      --ok:#41d18a;
-      --bad:#ff5c73;
-      --shadow: 0 12px 40px rgba(0,0,0,.35);
-      --radius:18px;
+      --bg:#fff6fb;
+      --card:#ffffff;
+      --text:#2b2b2b;
+      --muted:#6b6b6b;
+      --pink:#ff5fa2;
+      --pink2:#ff93c6;
+      --shadow: 0 14px 30px rgba(0,0,0,.10);
+      --radius: 22px;
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(1000px 600px at 20% 0%, rgba(255,126,182,.18), transparent 60%),
-                  radial-gradient(900px 600px at 90% 20%, rgba(122,252,255,.12), transparent 55%),
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(900px 500px at 30% 0%, rgba(255,95,162,.12), transparent 55%),
+                  radial-gradient(900px 500px at 80% 20%, rgba(255,147,198,.14), transparent 55%),
                   var(--bg);
       color:var(--text);
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:28px 16px 60px}
+    .wrap{max-width:1100px; margin:0 auto; padding:18px 14px 80px}
     .top{
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-      margin-bottom:18px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      padding:10px 6px 14px;
     }
-    .brand{display:flex; gap:12px; align-items:center;}
+    .brand{display:flex; align-items:center; gap:12px}
     .logo{
-      width:44px; height:44px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(255,126,182,.95), rgba(122,252,255,.85));
-      box-shadow: 0 10px 30px rgba(255,126,182,.15);
+      width:52px; height:52px; border-radius:18px;
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      box-shadow: 0 14px 28px rgba(255,95,162,.18);
+      position:relative;
     }
-    .brand h1{margin:0; font-size:18px; letter-spacing:.3px}
-    .brand p{margin:2px 0 0; color:var(--muted); font-size:13px}
-    .actions{display:flex; gap:10px; flex-wrap:wrap}
+    .logo:after{
+      content:"🍰";
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:26px;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,.12));
+    }
+    h1{margin:0; font-size:18px}
+    .sub{margin:2px 0 0; color:var(--muted); font-size:13px}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
     .btn{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
+      border:0;
+      padding:12px 14px;
+      border-radius: 18px;
       cursor:pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,.22);
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      font-size:14px;
+      font-weight:700;
+      box-shadow: var(--shadow);
+      font-size:15px;
+      transition: transform .12s ease;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
     }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.08)}
+    .btn:hover{transform: translateY(-1px)}
     .btn.primary{
-      background: linear-gradient(135deg, rgba(255,126,182,.95), rgba(255,126,182,.55));
-      border-color: rgba(255,126,182,.35);
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      color:#fff;
     }
-    .btn.ghost{background: transparent; border-color: rgba(255,255,255,.14);}
-    .btn.ok{
-      background: linear-gradient(135deg, rgba(65,209,138,.95), rgba(65,209,138,.55));
-      border-color: rgba(65,209,138,.35);
+    .btn.light{
+      background:#fff;
+      color:var(--text);
+      border:1px solid rgba(0,0,0,.08);
     }
 
-    .pillbar{
-      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-      margin: 14px 0 18px;
-      padding: 12px;
+    .hero{
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(0,0,0,.06);
       border-radius: var(--radius);
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
       box-shadow: var(--shadow);
+      padding:16px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:center;
+      overflow:hidden;
     }
-    .search{flex: 1 1 260px; display:flex; gap:10px; align-items:center;}
-    .input, select, textarea{
-      width:100%;
-      background: rgba(0,0,0,.28);
-      border:1px solid rgba(255,255,255,.12);
-      color:var(--text);
-      border-radius:14px;
+    @media (max-width: 860px){ .hero{grid-template-columns:1fr} }
+    .heroTitle{font-size:26px; line-height:1.1; margin:0 0 8px}
+    .heroText{margin:0; color:var(--muted); font-size:15px; line-height:1.35}
+    .heroBadges{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .badge{
+      background: rgba(255,95,162,.10);
+      border: 1px solid rgba(255,95,162,.18);
+      color: #8a1f50;
+      padding:8px 10px;
+      border-radius: 999px;
+      font-weight:700;
+      font-size:13px;
+    }
+    .heroImg{
+      border-radius: 18px;
+      min-height: 170px;
+      background:
+        linear-gradient(135deg, rgba(255,95,162,.18), rgba(255,147,198,.20)),
+        url("https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=60");
+      background-size: cover;
+      background-position:center;
+      box-shadow: 0 16px 30px rgba(0,0,0,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .heroImg:after{
+      content:"Tap photos below to view bigger 👇";
+      position:absolute;
+      left:12px; bottom:12px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(0,0,0,.06);
+      color: var(--text);
       padding:10px 12px;
-      outline:none;
-      box-shadow: 0 0 0 0 var(--ring);
-      transition: box-shadow .12s ease, border-color .12s ease;
+      border-radius: 14px;
+      font-weight:700;
+      font-size:13px;
+      box-shadow: 0 12px 22px rgba(0,0,0,.10);
     }
-    .input:focus, select:focus, textarea:focus{
-      border-color: rgba(255,126,182,.35);
-      box-shadow: 0 0 0 6px var(--ring);
+
+    .sectionTitle{
+      margin:18px 4px 10px;
+      font-size:16px;
+      color: var(--text);
     }
-    .filters{display:flex; gap:10px; flex-wrap:wrap;}
 
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap:12px;
+      margin-top:8px;
     }
-    .card{
+    .tile{
       grid-column: span 4;
-      min-height: 250px;
       border-radius: var(--radius);
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
       overflow:hidden;
-      cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease;
-      position:relative;
-    }
-    .card:hover{transform: translateY(-2px); border-color: rgba(255,255,255,.18)}
-    .thumb{
-      width:100%;
-      height:170px;
-      background: rgba(0,0,0,.35);
-      display:flex; align-items:center; justify-content:center;
-      position:relative;
-    }
-    .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
-    .badge{
-      position:absolute; top:10px; left:10px;
-      background: rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.12);
-      padding:6px 8px;
-      border-radius:999px;
-      font-size:12px;
-      color: rgba(255,255,255,.92);
-      backdrop-filter: blur(6px);
-    }
-    .meta{padding:12px}
-    .meta h3{margin:0 0 6px; font-size:15px}
-    .meta .sub{color:var(--muted); font-size:13px; line-height:1.2}
-    .meta .tags{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap}
-    .tag{
-      font-size:12px;
-      padding:5px 8px;
-      border-radius:999px;
-      background: rgba(255,126,182,.10);
-      border:1px solid rgba(255,126,182,.18);
-      color: rgba(255,255,255,.92);
-    }
-    .tag.alt{
-      background: rgba(122,252,255,.10);
-      border-color: rgba(122,252,255,.18);
-    }
-    @media (max-width: 900px){ .card{grid-column: span 6} }
-    @media (max-width: 560px){ .card{grid-column: span 12} }
-
-    .panel{
-      margin-top:16px;
-      padding:14px;
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,.06);
       box-shadow: var(--shadow);
-      display:none;
+      cursor:pointer;
+      transition: transform .12s ease;
+      position:relative;
+      min-height: 210px;
     }
-    .panel.show{display:block}
-    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
-    @media (max-width: 700px){ .row{grid-template-columns:1fr} }
-    label{font-size:12px; color:var(--muted); display:block; margin:10px 0 6px}
-    textarea{min-height:90px; resize:vertical}
-    .status{margin-top:10px; font-size:13px; color:var(--muted)}
-    .status.ok{color:var(--ok)}
-    .status.bad{color:var(--bad)}
-    .divider{height:1px; background: rgba(255,255,255,.10); margin:12px 0}
+    .tile:hover{transform: translateY(-2px)}
+    .tile img{width:100%; height:100%; object-fit:cover; display:block}
+    .cap{
+      position:absolute;
+      left:10px; right:10px; bottom:10px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 16px;
+      padding:10px 12px;
+      box-shadow: 0 12px 20px rgba(0,0,0,.10);
+    }
+    .cap .name{font-weight:900; font-size:14px}
+    .cap .tiny{color:var(--muted); font-size:12px; margin-top:2px}
 
+    @media (max-width: 900px){ .tile{grid-column: span 6} }
+    @media (max-width: 560px){ .tile{grid-column: span 12} }
+
+    .stickyBar{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      background: rgba(255,255,255,.92);
+      border-top: 1px solid rgba(0,0,0,.08);
+      padding:10px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      z-index:10;
+      backdrop-filter: blur(10px);
+    }
+    .stickyBar .btn{box-shadow: 0 12px 24px rgba(0,0,0,.10)}
+
+    /* Simple photo viewer */
     .modal{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -173,192 +187,105 @@
     }
     .modal.show{display:flex}
     .modalCard{
-      width:min(900px, 100%);
-      border-radius: 22px;
-      background: rgba(20,20,30,.92);
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      width:min(950px, 100%);
+      background:#fff;
+      border-radius: 24px;
       overflow:hidden;
+      box-shadow: 0 30px 70px rgba(0,0,0,.35);
       position:relative;
     }
     .modalTop{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 14px;
-      background: rgba(255,255,255,.06);
-      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 12px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
     }
-    .x{cursor:pointer; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06)}
-    .modalBody{padding:14px}
-    .gallery{display:grid; grid-template-columns: repeat(12, 1fr); gap:10px;}
-    .gimg{
-      grid-column: span 4;
-      height:180px;
-      border-radius: 16px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.35);
+    .modalTitle{font-weight:900}
+    .close{
+      border:0;
+      background:#f3f3f3;
+      border-radius: 14px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
     }
-    .gimg img{width:100%; height:100%; object-fit:cover; display:block}
-    @media (max-width: 900px){ .gimg{grid-column: span 6} }
-    @media (max-width: 560px){ .gimg{grid-column: span 12; height:200px} }
-
-    .detailGrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:12px; align-items:start;}
-    @media (max-width: 860px){ .detailGrid{grid-template-columns:1fr} }
-    .box{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
+    .modalImg{
+      width:100%;
+      max-height: 72vh;
+      object-fit:cover;
+      display:block;
+    }
+    .modalBottom{
       padding:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
     }
-    .small{color:var(--muted); font-size:13px; line-height:1.4}
+    .note{color:var(--muted); font-size:13px}
   </style>
 </head>
 <body>
   <div class="wrap">
+
     <div class="top">
       <div class="brand">
         <div class="logo"></div>
         <div>
-          <h1 id="siteTitle">Bakery Portfolio</h1>
-          <p id="siteTagline">Cake pops, cakes, brownies, cookies and more</p>
+          <h1 id="brandName">Mom’s Sweet Treats</h1>
+          <div class="sub" id="brandSub">Made with love • Local pickup • Message to order</div>
         </div>
       </div>
-      <div class="actions">
-        <button class="btn ghost" id="contactBtn">Contact</button>
-        <button class="btn" id="loginBtn">Admin login</button>
-        <button class="btn" id="logoutBtn" style="display:none">Logout</button>
-      </div>
-    </div>
-
-    <div class="pillbar">
-      <div class="search">
-        <input class="input" id="search" placeholder="Search (ex: chocolate, birthday, cake pops)..." />
-      </div>
-      <div class="filters">
-        <select id="typeFilter">
-          <option value="">All types</option>
-          <option value="Cake">Cake</option>
-          <option value="Cake Pops">Cake Pops</option>
-          <option value="Brownies">Brownies</option>
-          <option value="Cookies">Cookies</option>
-          <option value="Cupcakes">Cupcakes</option>
-          <option value="Other">Other</option>
-        </select>
-        <select id="sort">
-          <option value="new">Newest</option>
-          <option value="old">Oldest</option>
-          <option value="az">A to Z</option>
-        </select>
+      <div class="ctaRow">
+        <button class="btn primary" id="btnText">💬 Text to Order</button>
+        <button class="btn light" id="btnFB">📘 Facebook</button>
+        <button class="btn light" id="btnMsg">💙 Messenger</button>
       </div>
     </div>
 
-    <div id="adminPanel" class="panel">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
-        <div>
-          <div style="font-size:14px">Admin dashboard</div>
-          <div class="small">Add a new bake and it instantly appears on the public gallery.</div>
+    <div class="hero">
+      <div>
+        <h2 class="heroTitle">Cute treats for birthdays, holidays, and “just because”</h2>
+        <p class="heroText">
+          Tap any photo to see it bigger. If you like something, press the big button to message me.
+        </p>
+        <div class="heroBadges">
+          <div class="badge">Cake Pops</div>
+          <div class="badge">Cakes</div>
+          <div class="badge">Brownies</div>
+          <div class="badge">Cookies</div>
         </div>
-        <button class="btn primary" id="toggleFormBtn">Add a new bake!</button>
       </div>
-
-      <div id="formWrap" style="display:none">
-        <div class="divider"></div>
-
-        <div class="row">
-          <div>
-            <label>Title</label>
-            <input class="input" id="title" placeholder="Cookies & Cream Cake Pops" />
-          </div>
-          <div>
-            <label>Type</label>
-            <select id="type">
-              <option value="Cake Pops">Cake Pops</option>
-              <option value="Cake">Cake</option>
-              <option value="Brownies">Brownies</option>
-              <option value="Cookies">Cookies</option>
-              <option value="Cupcakes">Cupcakes</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Flavor</label>
-            <input class="input" id="flavor" placeholder="Chocolate, vanilla, strawberry..." />
-          </div>
-          <div>
-            <label>Tags (comma separated)</label>
-            <input class="input" id="tags" placeholder="Birthday, Wedding, Holiday" />
-          </div>
-        </div>
-
-        <label>Description</label>
-        <textarea id="description" placeholder="Short description customers will see..."></textarea>
-
-        <label>Ingredients</label>
-        <textarea id="ingredients" placeholder="List ingredients (ex: flour, eggs, sugar, butter...)"></textarea>
-
-        <div class="row">
-          <div>
-            <label>Allergens (optional)</label>
-            <input class="input" id="allergens" placeholder="Milk, eggs, wheat..." />
-          </div>
-          <div>
-            <label>Price (optional)</label>
-            <input class="input" id="price" placeholder="$2.50 each or $25/dozen" />
-          </div>
-        </div>
-
-        <label>Images (select multiple)</label>
-        <input class="input" type="file" id="images" multiple accept="image/*" />
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-          <button class="btn ok" id="saveBtn">Publish bake</button>
-          <button class="btn ghost" id="clearBtn">Clear</button>
-        </div>
-
-        <div id="status" class="status"></div>
-      </div>
+      <div class="heroImg" id="heroImg"></div>
     </div>
 
-    <div id="grid" class="grid"></div>
+    <div class="sectionTitle">Tap a photo ✨</div>
+    <div class="grid" id="grid"></div>
 
-    <div class="modal" id="modal">
-      <div class="modalCard">
-        <div class="modalTop">
-          <div id="modalTitle" style="font-size:14px"></div>
-          <button class="x" id="closeModal">Close</button>
-        </div>
-        <div class="modalBody">
-          <div class="detailGrid">
-            <div class="box">
-              <div id="modalBadges" style="margin-bottom:10px"></div>
-              <div id="modalDesc" class="small"></div>
-              <div class="divider"></div>
-              <div class="small" style="margin-bottom:6px">Ingredients</div>
-              <div id="modalIng" class="small"></div>
-            </div>
-            <div class="box">
-              <div class="small" style="margin-bottom:8px">Quick info</div>
-              <div id="modalInfo" class="small"></div>
-              <div class="divider"></div>
-              <div class="small">Contact to order</div>
-              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
-                <button class="btn primary" id="fbBtn">Facebook</button>
-                <button class="btn" id="msgBtn">Messenger</button>
-              </div>
-            </div>
-          </div>
+  </div>
 
-          <div class="divider"></div>
-          <div class="gallery" id="modalGallery"></div>
+  <div class="stickyBar">
+    <button class="btn primary" id="btnText2">💬 Text to Order</button>
+    <button class="btn light" id="btnMsg2">💙 Messenger</button>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modalCard">
+      <div class="modalTop">
+        <div class="modalTitle" id="modalTitle">Treat</div>
+        <button class="close" id="closeModal">Close</button>
+      </div>
+      <img class="modalImg" id="modalImg" alt="Treat photo" />
+      <div class="modalBottom">
+        <div class="note" id="modalNote">Tap Message to ask about this one.</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn primary" id="btnMsg3">💙 Messenger</button>
+          <button class="btn light" id="btnFB2">📘 Facebook</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- your app -->
   <script type="module" src="./app.js"></script>
 </body>
 </html>
