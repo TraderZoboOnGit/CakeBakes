@@ -1,384 +1,364 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mom's Bakery | Fresh Bakes Daily</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bakery Portfolio</title>
+  <style>
+    :root{
+      --bg:#0f0f13;
+      --card:#161621;
+      --muted:#9aa0aa;
+      --text:#f3f5f7;
+      --accent:#ff7eb6;
+      --accent2:#7afcff;
+      --ring: rgba(255,126,182,.25);
+      --ok:#41d18a;
+      --bad:#ff5c73;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1000px 600px at 20% 0%, rgba(255,126,182,.18), transparent 60%),
+                  radial-gradient(900px 600px at 90% 20%, rgba(122,252,255,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 16px 60px}
+    .top{
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .brand{display:flex; gap:12px; align-items:center;}
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(255,126,182,.95), rgba(122,252,255,.85));
+      box-shadow: 0 10px 30px rgba(255,126,182,.15);
+    }
+    .brand h1{margin:0; font-size:18px; letter-spacing:.3px}
+    .brand p{margin:2px 0 0; color:var(--muted); font-size:13px}
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,.22);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      font-size:14px;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.08)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,126,182,.95), rgba(255,126,182,.55));
+      border-color: rgba(255,126,182,.35);
+    }
+    .btn.ghost{background: transparent; border-color: rgba(255,255,255,.14);}
+    .btn.ok{
+      background: linear-gradient(135deg, rgba(65,209,138,.95), rgba(65,209,138,.55));
+      border-color: rgba(65,209,138,.35);
+    }
 
-        body {
-            background-color: #fff9f5;
-            color: #5c3d2e;
-            line-height: 1.6;
-        }
+    .pillbar{
+      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      margin: 14px 0 18px;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+    }
+    .search{flex: 1 1 260px; display:flex; gap:10px; align-items:center;}
+    .input, select, textarea{
+      width:100%;
+      background: rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      outline:none;
+      box-shadow: 0 0 0 0 var(--ring);
+      transition: box-shadow .12s ease, border-color .12s ease;
+    }
+    .input:focus, select:focus, textarea:focus{
+      border-color: rgba(255,126,182,.35);
+      box-shadow: 0 0 0 6px var(--ring);
+    }
+    .filters{display:flex; gap:10px; flex-wrap:wrap;}
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #f8e5d6 0%, #e8c4a8 100%);
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 5px solid #d4a574;
-            box-shadow: 0 4px 12px rgba(92, 61, 46, 0.1);
-        }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .card{
+      grid-column: span 4;
+      min-height: 250px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease;
+      position:relative;
+    }
+    .card:hover{transform: translateY(-2px); border-color: rgba(255,255,255,.18)}
+    .thumb{
+      width:100%;
+      height:170px;
+      background: rgba(0,0,0,.35);
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+    }
+    .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+    .badge{
+      position:absolute; top:10px; left:10px;
+      background: rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px 8px;
+      border-radius:999px;
+      font-size:12px;
+      color: rgba(255,255,255,.92);
+      backdrop-filter: blur(6px);
+    }
+    .meta{padding:12px}
+    .meta h3{margin:0 0 6px; font-size:15px}
+    .meta .sub{color:var(--muted); font-size:13px; line-height:1.2}
+    .meta .tags{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap}
+    .tag{
+      font-size:12px;
+      padding:5px 8px;
+      border-radius:999px;
+      background: rgba(255,126,182,.10);
+      border:1px solid rgba(255,126,182,.18);
+      color: rgba(255,255,255,.92);
+    }
+    .tag.alt{
+      background: rgba(122,252,255,.10);
+      border-color: rgba(122,252,255,.18);
+    }
+    @media (max-width: 900px){ .card{grid-column: span 6} }
+    @media (max-width: 560px){ .card{grid-column: span 12} }
 
-        h1 {
-            font-size: 3rem;
-            color: #8b4513;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
+    .panel{
+      margin-top:16px;
+      padding:14px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      display:none;
+    }
+    .panel.show{display:block}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    @media (max-width: 700px){ .row{grid-template-columns:1fr} }
+    label{font-size:12px; color:var(--muted); display:block; margin:10px 0 6px}
+    textarea{min-height:90px; resize:vertical}
+    .status{margin-top:10px; font-size:13px; color:var(--muted)}
+    .status.ok{color:var(--ok)}
+    .status.bad{color:var(--bad)}
+    .divider{height:1px; background: rgba(255,255,255,.10); margin:12px 0}
 
-        .tagline {
-            font-size: 1.2rem;
-            color: #a0522d;
-            font-style: italic;
-        }
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:16px;
+      z-index:50;
+    }
+    .modal.show{display:flex}
+    .modalCard{
+      width:min(900px, 100%);
+      border-radius: 22px;
+      background: rgba(20,20,30,.92);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      overflow:hidden;
+      position:relative;
+    }
+    .modalTop{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      background: rgba(255,255,255,.06);
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .x{cursor:pointer; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06)}
+    .modalBody{padding:14px}
+    .gallery{display:grid; grid-template-columns: repeat(12, 1fr); gap:10px;}
+    .gimg{
+      grid-column: span 4;
+      height:180px;
+      border-radius: 16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.35);
+    }
+    .gimg img{width:100%; height:100%; object-fit:cover; display:block}
+    @media (max-width: 900px){ .gimg{grid-column: span 6} }
+    @media (max-width: 560px){ .gimg{grid-column: span 12; height:200px} }
 
-        /* Admin Login Bar */
-        #adminBar {
-            background: #5c3d2e;
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        #adminBar.hidden {
-            display: none;
-        }
-
-        .admin-btn {
-            background: #d4a574;
-            color: #5c3d2e;
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .admin-btn:hover {
-            background: #c18f5a;
-            transform: translateY(-2px);
-        }
-
-        /* Add Bake Form */
-        #addBakeForm {
-            background: white;
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(92, 61, 46, 0.15);
-            display: none;
-        }
-
-        #addBakeForm.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #8b4513;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e8c4a8;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        /* Gallery */
-        .filters {
-            text-align: center;
-            margin: 2rem 0;
-            padding: 1rem;
-        }
-
-        .filter-btn {
-            background: #f8e5d6;
-            border: 2px solid #d4a574;
-            padding: 0.7rem 1.5rem;
-            margin: 0.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #5c3d2e;
-            transition: all 0.3s;
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: #d4a574;
-            color: white;
-        }
-
-        #gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .bake-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(92, 61, 46, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .bake-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 25px rgba(92, 61, 46, 0.2);
-        }
-
-        .bake-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-bottom: 5px solid #d4a574;
-        }
-
-        .bake-info {
-            padding: 1.5rem;
-        }
-
-        .bake-type {
-            display: inline-block;
-            background: #f8e5d6;
-            color: #8b4513;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
-            font-weight: bold;
-        }
-
-        .bake-title {
-            font-size: 1.5rem;
-            color: #5c3d2e;
-            margin-bottom: 0.5rem;
-        }
-
-        .bake-flavor {
-            color: #a0522d;
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .bake-ingredients {
-            color: #666;
-            font-size: 0.95rem;
-            margin-top: 1rem;
-        }
-
-        .delete-btn {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem;
-            background: #5c3d2e;
-            color: #f8e5d6;
-            margin-top: 4rem;
-        }
-
-        .contact-btn {
-            background: #d4a574;
-            color: #5c3d2e;
-            border: none;
-            padding: 1rem 3rem;
-            font-size: 1.2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            margin: 2rem 0;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-
-        .contact-btn:hover {
-            background: #c18f5a;
-            transform: scale(1.05);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            #gallery { grid-template-columns: 1fr; padding: 1rem; }
-            .filters { overflow-x: auto; white-space: nowrap; }
-        }
-
-        /* Login Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-        }
-    </style>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    .detailGrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:12px; align-items:start;}
+    @media (max-width: 860px){ .detailGrid{grid-template-columns:1fr} }
+    .box{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      padding:12px;
+    }
+    .small{color:var(--muted); font-size:13px; line-height:1.4}
+  </style>
 </head>
 <body>
-    <!-- Admin Login Bar -->
-    <div id="adminBar" class="hidden">
-        <span id="adminGreeting">Admin Mode</span>
-        <button id="addNewBakeBtn" class="admin-btn">＋ Add New Bake</button>
-        <button id="logoutBtn" class="admin-btn">Logout</button>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1 id="siteTitle">Bakery Portfolio</h1>
+          <p id="siteTagline">Cake pops, cakes, brownies, cookies and more</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost" id="contactBtn">Contact</button>
+        <button class="btn" id="loginBtn">Admin login</button>
+        <button class="btn" id="logoutBtn" style="display:none">Logout</button>
+      </div>
     </div>
 
-    <!-- Header -->
-    <header>
-        <h1>🍰 Mom's Bakery</h1>
-        <p class="tagline">Handcrafted with love • Fresh daily</p>
-    </header>
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h2>Admin Login</h2>
-            <p style="margin-bottom: 1.5rem; color: #666;">Enter the admin password to manage bakes</p>
-            <input type="password" id="adminPassword" placeholder="Enter admin password" style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 2px solid #e8c4a8; border-radius: 8px;">
-            <button id="loginBtn" class="admin-btn" style="width: 100%; padding: 1rem;">Login</button>
-            <p id="loginError" style="color: #ff6b6b; margin-top: 1rem; display: none;">Incorrect password</p>
-        </div>
+    <div class="pillbar">
+      <div class="search">
+        <input class="input" id="search" placeholder="Search (ex: chocolate, birthday, cake pops)..." />
+      </div>
+      <div class="filters">
+        <select id="typeFilter">
+          <option value="">All types</option>
+          <option value="Cake">Cake</option>
+          <option value="Cake Pops">Cake Pops</option>
+          <option value="Brownies">Brownies</option>
+          <option value="Cookies">Cookies</option>
+          <option value="Cupcakes">Cupcakes</option>
+          <option value="Other">Other</option>
+        </select>
+        <select id="sort">
+          <option value="new">Newest</option>
+          <option value="old">Oldest</option>
+          <option value="az">A to Z</option>
+        </select>
+      </div>
     </div>
 
-    <!-- Add Bake Form -->
-    <form id="addBakeForm">
-        <h2 style="text-align: center; color: #8b4513; margin-bottom: 2rem;">➕ Add New Bake</h2>
-        
-        <div class="form-group">
-            <label for="bakeName">Bake Name:</label>
-            <input type="text" id="bakeName" placeholder="e.g., Double Chocolate Cake Pop" required>
+    <div id="adminPanel" class="panel">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
+        <div>
+          <div style="font-size:14px">Admin dashboard</div>
+          <div class="small">Add a new bake and it instantly appears on the public gallery.</div>
         </div>
+        <button class="btn primary" id="toggleFormBtn">Add a new bake!</button>
+      </div>
 
-        <div class="form-group">
-            <label for="bakeType">Bake Type:</label>
-            <select id="bakeType" required>
-                <option value="">Select type...</option>
-                <option value="Cake Pop">Cake Pop</option>
-                <option value="Cake">Cake</option>
-                <option value="Brownie">Brownie</option>
-                <option value="Cookie">Cookie</option>
-                <option value="Cupcake">Cupcake</option>
-                <option value="Pastry">Pastry</option>
+      <div id="formWrap" style="display:none">
+        <div class="divider"></div>
+
+        <div class="row">
+          <div>
+            <label>Title</label>
+            <input class="input" id="title" placeholder="Cookies & Cream Cake Pops" />
+          </div>
+          <div>
+            <label>Type</label>
+            <select id="type">
+              <option value="Cake Pops">Cake Pops</option>
+              <option value="Cake">Cake</option>
+              <option value="Brownies">Brownies</option>
+              <option value="Cookies">Cookies</option>
+              <option value="Cupcakes">Cupcakes</option>
+              <option value="Other">Other</option>
             </select>
+          </div>
         </div>
 
-        <div class="form-group">
-            <label for="flavor">Flavor:</label>
-            <input type="text" id="flavor" placeholder="e.g., Salted Caramel Chocolate" required>
+        <div class="row">
+          <div>
+            <label>Flavor</label>
+            <input class="input" id="flavor" placeholder="Chocolate, vanilla, strawberry..." />
+          </div>
+          <div>
+            <label>Tags (comma separated)</label>
+            <input class="input" id="tags" placeholder="Birthday, Wedding, Holiday" />
+          </div>
         </div>
 
-        <div class="form-group">
-            <label for="imageUrl">Image URL:</label>
-            <input type="url" id="imageUrl" placeholder="https://example.com/image.jpg" required>
-            <small style="color: #666;">Upload to imgur.com or similar, then paste the direct image link here</small>
+        <label>Description</label>
+        <textarea id="description" placeholder="Short description customers will see..."></textarea>
+
+        <label>Ingredients</label>
+        <textarea id="ingredients" placeholder="List ingredients (ex: flour, eggs, sugar, butter...)"></textarea>
+
+        <div class="row">
+          <div>
+            <label>Allergens (optional)</label>
+            <input class="input" id="allergens" placeholder="Milk, eggs, wheat..." />
+          </div>
+          <div>
+            <label>Price (optional)</label>
+            <input class="input" id="price" placeholder="$2.50 each or $25/dozen" />
+          </div>
         </div>
 
-        <div class="form-group">
-            <label for="ingredients">Ingredients & Description:</label>
-            <textarea id="ingredients" placeholder="Describe the bake, list ingredients, special notes..." required></textarea>
+        <label>Images (select multiple)</label>
+        <input class="input" type="file" id="images" multiple accept="image/*" />
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+          <button class="btn ok" id="saveBtn">Publish bake</button>
+          <button class="btn ghost" id="clearBtn">Clear</button>
         </div>
 
-        <div style="display: flex; gap: 1rem; justify-content: center;">
-            <button type="submit" class="admin-btn" style="padding: 1rem 3rem;">Add to Gallery</button>
-            <button type="button" id="cancelBtn" class="admin-btn" style="background: #666; padding: 1rem 3rem;">Cancel</button>
-        </div>
-    </form>
-
-    <!-- Gallery Filters -->
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">All Bakes</button>
-        <button class="filter-btn" data-filter="Cake Pop">Cake Pops</button>
-        <button class="filter-btn" data-filter="Cake">Cakes</button>
-        <button class="filter-btn" data-filter="Brownie">Brownies</button>
-        <button class="filter-btn" data-filter="Cookie">Cookies</button>
-        <button class="filter-btn" data-filter="Pastry">Pastries</button>
+        <div id="status" class="status"></div>
+      </div>
     </div>
 
-    <!-- Gallery Container -->
-    <div id="gallery">
-        <!-- Bakes will load here -->
-        <div style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: #999;">
-            <p>Loading delicious bakes...</p>
+    <div id="grid" class="grid"></div>
+
+    <div class="modal" id="modal">
+      <div class="modalCard">
+        <div class="modalTop">
+          <div id="modalTitle" style="font-size:14px"></div>
+          <button class="x" id="closeModal">Close</button>
         </div>
+        <div class="modalBody">
+          <div class="detailGrid">
+            <div class="box">
+              <div id="modalBadges" style="margin-bottom:10px"></div>
+              <div id="modalDesc" class="small"></div>
+              <div class="divider"></div>
+              <div class="small" style="margin-bottom:6px">Ingredients</div>
+              <div id="modalIng" class="small"></div>
+            </div>
+            <div class="box">
+              <div class="small" style="margin-bottom:8px">Quick info</div>
+              <div id="modalInfo" class="small"></div>
+              <div class="divider"></div>
+              <div class="small">Contact to order</div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+                <button class="btn primary" id="fbBtn">Facebook</button>
+                <button class="btn" id="msgBtn">Messenger</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="gallery" id="modalGallery"></div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <h2 style="color: #f8e5d6; margin-bottom: 1rem;">Ready to Order?</h2>
-        <p style="margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Message us on Facebook to place your order! We bake fresh daily and accept custom orders.
-        </p>
-        <a href="https://facebook.com" target="_blank" class="contact-btn">
-            📱 Message on Facebook
-        </a>
-        <p style="margin-top: 3rem; color: #e8c4a8;">
-            © <span id="currentYear"></span> Mom's Bakery • Made with ❤️ and lots of sugar
-        </p>
-    </footer>
-
-    <!-- Your JavaScript -->
-    <script src="app.js"></script>
+  <!-- your app -->
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
